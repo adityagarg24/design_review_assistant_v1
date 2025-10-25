@@ -1,0 +1,11 @@
+{
+  "component": "Avatar",
+  "variant": "medium",
+  "props": {
+    "size": "40px",
+    "borderRadius": "9999px",
+    "backgroundColor": "neutral-100",
+    "border": "1px solid neutral-300",
+    "imageAltRequired": true
+  }
+}

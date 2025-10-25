@@ -1,0 +1,14 @@
+{
+  "component": "Checkbox",
+  "variant": "default",
+  "props": {
+    "boxSize": "16px",
+    "borderColor": "neutral-300",
+    "checkedBackground": "primary-500",
+    "checkmarkColor": "neutral-50",
+    "focus": {
+      "outline": "2px solid focus-300"
+    },
+    "labelFontSize": "14px"
+  }
+}

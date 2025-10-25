@@ -1,0 +1,303 @@
+{
+  "timestamp": "2025-10-24T16:39:39.628071",
+  "components": {
+    "dropdown": {
+      "figma": {
+        "component": "Dropdown",
+        "variant": "default",
+        "props": {
+          "backgroundColor": {
+            "token": "primary-500",
+            "value": "primary-500",
+            "resolved": "#0055FF"
+          },
+          "textColor": {
+            "token": "neutral-900",
+            "value": "neutral-900",
+            "resolved": "#111827"
+          },
+          "borderRadius": {
+            "value": "8px",
+            "normalized": 8
+          },
+          "fontSize": {
+            "value": "14px",
+            "normalized": 14
+          },
+          "padding": {
+            "value": "8px 12px"
+          },
+          "hover": {
+            "backgroundColor": "primary-600"
+          },
+          "focus": {
+            "outline": "2px solid focus-300",
+            "outlineOffset": "2px"
+          }
+        }
+      },
+      "pr": {
+        "component": "Dropdown",
+        "extractedProps": {
+          "backgroundColor": {
+            "token": "primary-400",
+            "value": "primary-400",
+            "resolved": "#2A8FFF"
+          },
+          "textColor": {
+            "token": "neutral-900",
+            "value": "neutral-900",
+            "resolved": "#111827"
+          },
+          "borderRadius": {
+            "value": "6px",
+            "normalized": 6
+          },
+          "fontSize": {
+            "value": "14px",
+            "normalized": 14
+          },
+          "padding": {
+            "value": "8px 12px"
+          }
+        }
+      }
+    },
+    "button": {
+      "figma": {
+        "component": "Button",
+        "variant": "primary",
+        "props": {
+          "backgroundColor": {
+            "token": "primary-500",
+            "value": "primary-500",
+            "resolved": "#0055FF"
+          },
+          "textColor": {
+            "token": "neutral-50",
+            "value": "neutral-50",
+            "resolved": "#FAFAFA"
+          },
+          "borderRadius": {
+            "value": "4px",
+            "normalized": 4
+          },
+          "fontSize": {
+            "value": "14px",
+            "normalized": 14
+          },
+          "padding": {
+            "value": "10px 16px"
+          },
+          "hover": {
+            "backgroundColor": "primary-600"
+          },
+          "focus": {
+            "outline": "2px solid focus-300"
+          }
+        }
+      },
+      "pr": {
+        "component": "Button",
+        "extractedProps": {
+          "backgroundColor": {
+            "token": "primary-500",
+            "value": "primary-500",
+            "resolved": "#0055FF"
+          },
+          "textColor": {
+            "token": "neutral-50",
+            "value": "neutral-50",
+            "resolved": "#FAFAFA"
+          },
+          "borderRadius": {
+            "value": "4px",
+            "normalized": 4
+          },
+          "fontSize": {
+            "value": "14px",
+            "normalized": 14
+          },
+          "padding": {
+            "value": "10px 16px"
+          }
+        }
+      }
+    },
+    "avatar": {
+      "figma": {
+        "component": "Avatar",
+        "variant": "medium",
+        "props": {
+          "size": {
+            "value": "40px",
+            "normalized": 40
+          },
+          "borderRadius": {
+            "value": "9999px",
+            "normalized": 9999
+          },
+          "backgroundColor": {
+            "token": "neutral-100",
+            "value": "neutral-100",
+            "resolved": "#F3F4F6"
+          },
+          "border": {
+            "value": "1px solid neutral-300"
+          },
+          "imageAltRequired": {
+            "value": true
+          }
+        }
+      },
+      "pr": {
+        "component": "Avatar",
+        "extractedProps": {
+          "size": {
+            "value": "40px",
+            "normalized": 40
+          },
+          "borderRadius": {
+            "value": "50%",
+            "type": "percentage"
+          },
+          "backgroundColor": {
+            "token": "neutral-100",
+            "value": "neutral-100",
+            "resolved": "#F3F4F6"
+          }
+        }
+      }
+    },
+    "header": {
+      "figma": {
+        "component": "Header",
+        "variant": "page",
+        "props": {
+          "fontFamily": {
+            "value": "Inter"
+          },
+          "fontSize": {
+            "value": "18px",
+            "normalized": 18
+          },
+          "fontWeight": {
+            "value": "600"
+          },
+          "textColor": {
+            "token": "neutral-900",
+            "value": "neutral-900",
+            "resolved": "#111827"
+          },
+          "lineHeight": {
+            "value": "24px",
+            "normalized": 24
+          },
+          "padding": {
+            "value": "16px 24px"
+          },
+          "backgroundColor": {
+            "token": "neutral-50",
+            "value": "neutral-50",
+            "resolved": "#FAFAFA"
+          }
+        }
+      },
+      "pr": {
+        "component": "Header",
+        "extractedProps": {
+          "fontFamily": {
+            "value": "Inter"
+          },
+          "fontSize": {
+            "value": "20px",
+            "normalized": 20
+          },
+          "fontWeight": {
+            "value": "600",
+            "normalized": 600
+          },
+          "textColor": {
+            "token": "neutral-900",
+            "value": "neutral-900",
+            "resolved": "#111827"
+          },
+          "lineHeight": {
+            "value": "24px",
+            "normalized": 24
+          },
+          "padding": {
+            "value": "16px 24px"
+          },
+          "backgroundColor": {
+            "token": "neutral-50",
+            "value": "neutral-50",
+            "resolved": "#FAFAFA"
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "figma": {
+        "component": "Checkbox",
+        "variant": "default",
+        "props": {
+          "boxSize": {
+            "value": "16px",
+            "normalized": 16
+          },
+          "borderColor": {
+            "token": "neutral-300",
+            "value": "neutral-300",
+            "resolved": "#D1D5DB"
+          },
+          "checkedBackground": {
+            "token": "primary-500",
+            "value": "primary-500",
+            "resolved": "#0055FF"
+          },
+          "checkmarkColor": {
+            "token": "neutral-50",
+            "value": "neutral-50",
+            "resolved": "#FAFAFA"
+          },
+          "focus": {
+            "outline": "2px solid focus-300"
+          },
+          "labelFontSize": {
+            "value": "14px",
+            "normalized": 14
+          }
+        }
+      },
+      "pr": {
+        "component": "Checkbox",
+        "extractedProps": {
+          "boxSize": {
+            "value": "16px",
+            "normalized": 16
+          },
+          "borderColor": {
+            "token": "neutral-300",
+            "value": "neutral-300",
+            "resolved": "#D1D5DB"
+          },
+          "checkedBackground": {
+            "token": "primary-600",
+            "value": "primary-600",
+            "resolved": "#0047E6"
+          },
+          "checkmarkColor": {
+            "token": "neutral-50",
+            "value": "neutral-50",
+            "resolved": "#FAFAFA"
+          },
+          "labelFontSize": {
+            "value": "14px",
+            "normalized": 14
+          }
+        }
+      }
+    }
+  }
+}

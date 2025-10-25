@@ -1,0 +1,17 @@
+{
+  "component": "Button",
+  "variant": "primary",
+  "props": {
+    "backgroundColor": "primary-500",
+    "textColor": "neutral-50",
+    "borderRadius": "4px",
+    "fontSize": "14px",
+    "padding": "10px 16px",
+    "hover": {
+      "backgroundColor": "primary-600"
+    },
+    "focus": {
+      "outline": "2px solid focus-300"
+    }
+  }
+}

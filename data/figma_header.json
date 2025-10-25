@@ -1,0 +1,13 @@
+{
+  "component": "Header",
+  "variant": "page",
+  "props": {
+    "fontFamily": "Inter",
+    "fontSize": "18px",
+    "fontWeight": "600",
+    "textColor": "neutral-900",
+    "lineHeight": "24px",
+    "padding": "16px 24px",
+    "backgroundColor": "neutral-50"
+  }
+}

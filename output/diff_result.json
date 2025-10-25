@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "timestamp": "2025-10-24T16:39:39.628074",
+    "totalComponents": 5,
+    "totalIssues": 7,
+    "summary": {
+      "major": 2,
+      "minor": 5,
+      "warnings": 0
+    }
+  },
+  "components": {
+    "dropdown": {
+      "status": "ISSUES_FOUND",
+      "issues": [
+        {
+          "severity": "MAJOR",
+          "property": "backgroundColor",
+          "figma": {
+            "token": "primary-500",
+            "value": "#0055FF"
+          },
+          "pr": {
+            "token": "primary-400",
+            "value": "#2A8FFF"
+          },
+          "recommendation": "Update PR to use 'primary-500' token instead of 'primary-400'",
+          "category": "TOKEN_MISMATCH"
+        },
+        {
+          "severity": "MINOR",
+          "property": "borderRadius",
+          "figma": {
+            "value": "8px"
+          },
+          "pr": {
+            "value": "6px"
+          },
+          "recommendation": "Consider using 8px to match design spec (current: 6px)",
+          "category": "VALUE_DIFFERENCE"
+        }
+      ]
+    },
+    "button": {
+      "status": "PERFECT_MATCH",
+      "issues": []
+    },
+    "avatar": {
+      "status": "ISSUES_FOUND",
+      "issues": [
+        {
+          "severity": "MINOR",
+          "property": "borderRadius",
+          "figma": {
+            "value": "9999px"
+          },
+          "pr": {
+            "value": "50%"
+          },
+          "recommendation": "Different border-radius approach but same visual effect",
+          "category": "IMPLEMENTATION_DIFFERENCE"
+        },
+        {
+          "severity": "MINOR",
+          "property": "border",
+          "figma": {
+            "value": {
+              "value": "1px solid neutral-300"
+            }
+          },
+          "pr": {
+            "missing": true
+          },
+          "recommendation": "Add missing property: border",
+          "category": "MISSING_PROPERTY"
+        },
+        {
+          "severity": "MINOR",
+          "property": "imageAltRequired",
+          "figma": {
+            "value": {
+              "value": true
+            }
+          },
+          "pr": {
+            "missing": true
+          },
+          "recommendation": "Add missing property: imageAltRequired",
+          "category": "MISSING_PROPERTY"
+        }
+      ]
+    },
+    "header": {
+      "status": "ISSUES_FOUND",
+      "issues": [
+        {
+          "severity": "MINOR",
+          "property": "fontSize",
+          "figma": {
+            "value": "18px"
+          },
+          "pr": {
+            "value": "20px"
+          },
+          "recommendation": "Consider using 18px to match design spec (current: 20px)",
+          "category": "VALUE_DIFFERENCE"
+        }
+      ]
+    },
+    "checkbox": {
+      "status": "ISSUES_FOUND",
+      "issues": [
+        {
+          "severity": "MAJOR",
+          "property": "checkedBackground",
+          "figma": {
+            "token": "primary-500",
+            "value": "#0055FF"
+          },
+          "pr": {
+            "token": "primary-600",
+            "value": "#0047E6"
+          },
+          "recommendation": "Update PR to use 'primary-500' token instead of 'primary-600'",
+          "category": "TOKEN_MISMATCH"
+        }
+      ]
+    }
+  }
+}
