@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Review Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+
+        .input-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .reset-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .success-message {
+            display: none;
+            color: #16a34a;
+            font-weight: 600;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        textarea {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            min-height: 150px;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        input[type="text"] {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 auto;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .analyze-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading {
+            display: none;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card .label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .major { color: #dc2626; }
+        .minor { color: #f59e0b; }
+        .perfect { color: #16a34a; }
+
+        .collapsible {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .collapsible-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .collapsible-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .collapsible.active .collapsible-content {
+            display: block;
+        }
+
+        .collapsible-header::after {
+            content: '▶';
+            transition: transform 0.2s;
+        }
+
+        .collapsible.active .collapsible-header::after {
+            transform: rotate(90deg);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .severity-MAJOR {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .severity-MINOR {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        pre {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎨 Design Review Assistant</h1>
+            <p>Compare Figma designs with PR implementations automatically</p>
+        </header>
+
+        <section class="input-section">
+            <button type="button" class="reset-btn" id="resetBtn">🗑️ Reset</button>
+            <form id="analyzeForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="figmaSpec">Figma Spec JSON</label>
+                        <textarea id="figmaSpec" placeholder='{"component": "Button", "props": {"backgroundColor": "primary-500", "fontSize": "14px"}}'></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tokens">Design Tokens JSON</label>
+                        <textarea id="tokens" placeholder='{"primary-500": "#0055FF", "neutral-900": "#111827"}'></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="jsxContent">JSX Code / PR Snippet</label>
+                        <textarea id="jsxContent" placeholder='<Button backgroundColor="primary-400" fontSize="14px" />'></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="analyze-btn">
+                    <span class="loading">⟳</span>
+                    <span class="text">🔍 Run Design Review</span>
+                </button>
+                
+                <div id="successMessage" class="success-message">
+                    ✅ AI design review is ready!
+                </div>
+            </form>
+            
+            <div id="error" class="error"></div>
+        </section>
+
+        <section id="results" class="results-section">
+            <div class="summary-cards" id="summaryCards"></div>
+            
+            <div class="collapsible" id="parsedValuesSection">
+                <div class="collapsible-header">Parsed Values</div>
+                <div class="collapsible-content">
+                    <pre id="parsedValues"></pre>
+                </div>
+            </div>
+            
+            <div class="collapsible active" id="issuesSection">
+                <div class="collapsible-header">Analysis Results</div>
+                <div class="collapsible-content">
+                    <div class="filter-section">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="MAJOR">Major Issues</button>
+                        <button class="filter-btn" data-filter="MINOR">Minor Issues</button>
+                        <button class="filter-btn" data-filter="TOKEN_MISMATCH">Token Mismatches</button>
+                        <button class="filter-btn" data-filter="VALUE_DIFFERENCE">Value Differences</button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="resultsTable">
+                            <thead>
+                                <tr>
+                                    <th>Component Name</th>
+                                    <th>Property</th>
+                                    <th>Severity</th>
+                                    <th>Figma Value</th>
+                                    <th>PR Value</th>
+                                    <th>Type of Issue-Category</th>
+                                    <th>Recommendation</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let currentResults = null;
+        let currentFilter = 'all';
+
+        // Sample data for quick testing
+        const sampleData = {
+            figma: `{
+  "component": "Dropdown",
+  "variant": "default",
+  "props": {
+    "backgroundColor": "primary-500",
+    "textColor": "neutral-900",
+    "borderRadius": "8px",
+    "fontSize": "14px",
+    "padding": "8px 12px",
+    "hover": {
+      "backgroundColor": "primary-600"
+    },
+    "focus": {
+      "outline": "2px solid focus-300",
+      "outlineOffset": "2px"
+    }
+  }
+}`,
+            tokens: `{
+  "primary-400": "#2A8FFF",
+  "primary-500": "#0055FF",
+  "primary-600": "#0047E6",
+  "neutral-50": "#FAFAFA",
+  "neutral-100": "#F3F4F6",
+  "neutral-300": "#D1D5DB",
+  "neutral-700": "#374151",
+  "neutral-900": "#111827",
+  "accent-500": "#FF6B6B",
+  "focus-300": "#B3D4FF",
+  "radius-sm": "4px",
+  "radius-md": "8px",
+  "radius-round": "9999px",
+  "spacing-sm": "4px",
+  "spacing-md": "8px",
+  "spacing-lg": "16px",
+  "font-base": "14px",
+  "font-lg": "18px"
+}`,
+            jsx: `// Changed lines from PR for Dropdown component
+<Dropdown
+  backgroundColor="primary-400"
+  textColor="neutral-900"
+  borderRadius="6px"
+  fontSize="14px"
+  padding="8px 12px"
+/>`
+        };
+
+        // Load sample data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('figmaSpec').value = sampleData.figma;
+            document.getElementById('tokens').value = sampleData.tokens;
+            document.getElementById('jsxContent').value = sampleData.jsx;
+        });
+
+        // Reset button functionality
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('figmaSpec').value = '';
+            document.getElementById('tokens').value = '';
+            document.getElementById('jsxContent').value = '';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            currentResults = null;
+        });
+
+        // Form submission
+        document.getElementById('analyzeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.analyze-btn');
+            const loading = document.querySelector('.loading');
+            const text = document.querySelector('.text');
+            const errorDiv = document.getElementById('error');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            loading.style.display = 'inline-block';
+            text.textContent = 'Analyzing...';
+            errorDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        figmaSpec: document.getElementById('figmaSpec').value,
+                        tokens: document.getElementById('tokens').value,
+                        jsxContent: document.getElementById('jsxContent').value,
+                        componentName: 'Component'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Analysis failed');
+                }
+                
+                currentResults = result;
+                displayResults(result);
+                
+            } catch (error) {
+                errorDiv.textContent = `Error: ${error.message}`;
+                errorDiv.style.display = 'block';
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+                text.textContent = '🔍 Run Design Review';
+                
+                // Show success message if analysis was successful
+                if (currentResults) {
+                    document.getElementById('successMessage').style.display = 'block';
+                }
+            }
+        });
+
+        function displayResults(result) {
+            const resultsSection = document.getElementById('results');
+            resultsSection.style.display = 'block';
+            
+            // Display summary cards
+            const summaryCards = document.getElementById('summaryCards');
+            const { component, summary } = result;
+            
+            summaryCards.innerHTML = `
+                <div class="summary-card">
+                    <div class="number ${component.status === 'PERFECT_MATCH' ? 'perfect' : 'major'}">${component.totalIssues}</div>
+                    <div class="label">Total Issues</div>
+                </div>
+                <div class="summary-card">
+                    <div class="number major">${summary.major}</div>
+                    <div class="label">Major Issues</div>
+                </div>
+                <div class="summary-card">
+                    <div class="number minor">${summary.minor}</div>
+                    <div class="label">Minor Issues</div>
+                </div>
+                <div class="summary-card">
+                    <div class="number perfect">${component.status === 'PERFECT_MATCH' ? '✓' : '✗'}</div>
+                    <div class="label">Status</div>
+                </div>
+            `;
+            
+            // Display parsed values
+            document.getElementById('parsedValues').textContent = JSON.stringify(result.parsedValues, null, 2);
+            
+            // Display results table
+            displayTable(component.issues);
+        }
+
+        function displayTable(issues) {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            if (issues.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #16a34a;">🎉 Perfect Match! No issues found.</td></tr>';
+                return;
+            }
+            
+            issues.forEach(issue => {
+                const figmaValue = issue.figma.token ? `${issue.figma.token} (${issue.figma.value})` : 
+                                 issue.figma.value || (issue.figma.required ? 'Required' : 'N/A');
+                const prValue = issue.pr.missing ? 'Missing' : 
+                               issue.pr.token ? `${issue.pr.token} (${issue.pr.value})` : 
+                               issue.pr.value || 'N/A';
+                
+                const row = document.createElement('tr');
+                row.className = `issue-row severity-${issue.severity} category-${issue.category}`;
+                row.innerHTML = `
+                    <td><strong>${currentResults.component.name}</strong></td>
+                    <td><strong>${issue.property}</strong></td>
+                    <td><span class="severity-badge severity-${issue.severity}">${issue.severity}</span></td>
+                    <td>${figmaValue}</td>
+                    <td>${prValue}</td>
+                    <td>${issue.category}</td>
+                    <td>${issue.recommendation}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                currentFilter = filter;
+                
+                if (currentResults) {
+                    let filteredIssues = currentResults.component.issues;
+                    
+                    if (filter !== 'all') {
+                        filteredIssues = filteredIssues.filter(issue => 
+                            issue.severity === filter || issue.category === filter
+                        );
+                    }
+                    
+                    displayTable(filteredIssues);
+                }
+            });
+        });
+
+        // Collapsible sections
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const collapsible = this.parentElement;
+                collapsible.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
